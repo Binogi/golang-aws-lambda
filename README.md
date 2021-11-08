@@ -6,7 +6,29 @@
 - AWS Lambda function handler in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
 - Example Gist: https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f
 
-To build your image:
+## Build Go binary
+
+Create the working directory
+
+    mkdir myFunction
+
+Change to the directory
+
+    cd myFunction
+
+(Create the files: main.go and Dockerfile)
+
+Initialize the module in Go
+
+    go mod init example.com/myFunction
+
+Build the go app for Linux
+
+    GOOS=linux go build
+
+## Build Docker image
+
+To build your Docker image:
 
     docker build -t my-lambda-app .
 
