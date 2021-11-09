@@ -58,11 +58,11 @@ In a separate terminal, you can then locally invoke the function using cURL:
 
 ## Deploy to AWS Lambda
 
-Input:
+Parameters used below:
 
-- AWS Account Number: e.g. `123456789012`
-- Region: e.g. `[Region]`, `us-east-1`
-- [my-lambda-function]: substitute with your app/repository/image name
+- `[my-lambda-function]`: substitute with your app/repository/image name
+- `[AWS Account Number]`: e.g. `123456789012`
+- `[Region]`: e.g. `eu-west-1`, `us-east-1`
 
 Create an IAM Policy (e.g. `ECRDockerImageCreation`) with the following permissions:
 
