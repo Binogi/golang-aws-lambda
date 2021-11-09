@@ -76,6 +76,8 @@ Build your local Docker image:
 
     make
 
+### Create a new Lambda function
+
 Authenticate the Docker CLI to your Amazon ECR registry:
 
     aws ecr get-login-password --region [Region] | docker login --username AWS --password-stdin [AWS Account Number].dkr.ecr.[Region].amazonaws.com
@@ -88,7 +90,7 @@ Create an ECR repository:
 
     aws ecr create-repository --repository-name [my-lambda-function] --region [Region]
 
-Deploy the image to Amazon ECR using the docker push command:
+Deploy the Docker image to Amazon ECR:
 
     docker push [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
@@ -102,3 +104,14 @@ You should now see your image repository on https://console.aws.amazon.com/ecr/r
 **Receiving error:**
 
     An error occurred (InvalidParameterValueException) when calling the CreateFunction operation: Source image [...] is not valid. Provide a valid source image.
+
+### Update an existing Lambda function
+
+Deploy the Docker image to Amazon ECR:
+
+    docker push [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
+
+Update the Lambda function:
+
+    aws lambda update-function --region [Region] --function-name [my-lambda-function] \
+      --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]
