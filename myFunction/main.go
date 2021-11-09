@@ -10,8 +10,8 @@ type ExampleEvent struct {
   Name string `json:"name"`
 }
 
-func HandleRequest(ctx context.Context, name ExampleEvent) (string, error) {
-  return fmt.Sprintf("Hello %s!", name.Name ), nil
+func HandleRequest(ctx context.Context, event ExampleEvent) (string, error) {
+  return fmt.Sprintf("Hello %s!", event.Name ), nil
 }
 
 func main() {
