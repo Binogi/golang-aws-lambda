@@ -5,8 +5,9 @@ Based on [aws-lambda-go on Docker Hub](https://hub.docker.com/r/amazon/aws-lambd
 See also:
 
 - AWS Go guide: https://docs.aws.amazon.com/lambda/latest/dg/lambda-golang.html
-- Docker image: https://gallery.ecr.aws/lambda/go
-- AWS Lambda function handler in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
+- AWS Docker image on ECR (Elastic Container Registry): https://gallery.ecr.aws/lambda/go
+- AWS Lambda function written in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
+- Building Go Docker images: https://docs.docker.com/language/golang/build-images/
 
 ## Build Go binary
 
