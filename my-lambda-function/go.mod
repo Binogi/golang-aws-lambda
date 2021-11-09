@@ -1,4 +1,4 @@
-module example.com/myFunction
+module example.com/my-lambda-function
 
 go 1.17
 

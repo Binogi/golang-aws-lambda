@@ -1,9 +1,9 @@
-build-docker-image: compile-go clean-up
-	docker build -t my-lambda-app .
+build-docker-image: compile-go
+	docker build -t my-lambda-function .
 
 compile-go:
-	cd myFunction; \
+	cd my-lambda-function; \
 		GOOS=linux go build
 
 clean-up:
-	rm myFunction/myFunction
+	rm my-lambda-function/my-lambda-function

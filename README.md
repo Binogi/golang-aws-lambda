@@ -9,35 +9,43 @@ See also:
 - AWS Lambda function written in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
 - Building Go Docker images: https://docs.docker.com/language/golang/build-images/
 
-## Build Go binary
+## Building both Go binary and Docker image
+
+    make
+
+## Manual build steps
+
+### Build Go binary
 
 Create the working directory
 
-    mkdir myFunction
+    mkdir my-lambda-function
 
 Change to the directory
 
-    cd myFunction
+    cd my-lambda-function
 
 _(Create the files: `main.go` and `Dockerfile`)_
 
 Initialize the module in Go
 
-    go mod init example.com/myFunction
+    go mod init example.com/my-lambda-function
 
 Build the go app for Linux
 
     GOOS=linux go build
 
-## Build Docker image
+### Build Docker image
 
 To build your Docker image:
 
-    docker build -t my-lambda-app .
+    docker build -t my-lambda-function .
+
+## Running the Lambda function
 
 To run your image locally:
 
-    docker run -p 9000:8080 my-lambda-app
+    docker run -p 9000:8080 my-lambda-function
 
 In a separate terminal, you can then locally invoke the function using cURL:
 
