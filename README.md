@@ -53,7 +53,7 @@ To run your image locally:
 
 In a separate terminal, you can then locally invoke the function using cURL:
 
-    curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"payload":"hello world!"}'
+    curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"name":"Tom"}'
 
 
 ## Deploy to AWS Lambda
