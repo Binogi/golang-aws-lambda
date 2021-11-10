@@ -124,6 +124,7 @@ Update the Lambda function:
 - Actions → Deploy API
 - Enter a “Stage” name e.g. “test”
 - You will get the endpoint back, e.g. `https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test`
-- Test the API with:
+
+You can now test the API with:
 
     curl -XPOST "https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test/my-lambda-function" -d '{"name":"Tom"}'
