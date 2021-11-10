@@ -99,10 +99,6 @@ You should now see your image repository on https://console.aws.amazon.com/ecr/r
       --code ImageUri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest \
       --role arn:aws:iam::[AWS Account Number]:role/lambda-ex
 
-**Receiving error:**
-
-    An error occurred (InvalidParameterValueException) when calling the CreateFunction operation: Source image [...] is not valid. Provide a valid source image.
-
 ### Update an existing Lambda function
 
 Deploy the Docker image to Amazon ECR:
