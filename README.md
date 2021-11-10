@@ -9,6 +9,7 @@ See also:
 - AWS Docker image on ECR (Elastic Container Registry): https://gallery.ecr.aws/lambda/go
 - AWS Lambda on Docker: https://docs.aws.amazon.com/lambda/latest/dg/configuration-images.html
 - AWS example of Lambda function written in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
+- AWS turn Lambda function into REST API using AWS API Gateway: https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html
 - Building Go Docker images: https://docs.docker.com/language/golang/build-images/
 
 
