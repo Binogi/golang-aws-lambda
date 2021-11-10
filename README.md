@@ -109,7 +109,7 @@ Deploy the Docker image to Amazon ECR:
 
 Update the Lambda function:
 
-    aws lambda update-function --region [Region] --function-name [my-lambda-function] \
+    aws lambda update-function-code --region [Region] --function-name [my-lambda-function] \
       --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
 ### Turn the Lambda function into a REST API using AWS API Gateway
