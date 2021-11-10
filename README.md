@@ -66,9 +66,7 @@ Parameters used below:
 
 Create an IAM Policy (e.g. `ECRDockerImageCreation`) with the following permissions:
 
-    ecr:GetAuthorizationToken
-    ecr:InitiateLayerUpload
-    ecr:CreateRepository
+    ecr:*
 
 You also need an IAM Role (e.g. `lambda-ex`) for _executing_ the Lambda function.
 
