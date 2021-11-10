@@ -7,6 +7,7 @@ See also:
 - AWS Deploy Go Lambda functions with Docker: https://docs.aws.amazon.com/lambda/latest/dg/go-image.html
 - AWS Go guide: https://docs.aws.amazon.com/lambda/latest/dg/lambda-golang.html
 - AWS Docker image on ECR (Elastic Container Registry): https://gallery.ecr.aws/lambda/go
+- AWS Lambda on Docker: https://docs.aws.amazon.com/lambda/latest/dg/configuration-images.html
 - AWS example of Lambda function written in Go: https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html
 - Building Go Docker images: https://docs.docker.com/language/golang/build-images/
 
@@ -109,3 +110,19 @@ Update the Lambda function:
 
     aws lambda update-function --region [Region] --function-name [my-lambda-function] \
       --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
+
+### Turn the Lambda function into a REST API using AWS API Gateway
+
+- Go to https://console.aws.amazon.com/apigateway
+- REST API → Build
+- Select radio button “New API”
+- Actions → Create Resource, enter resource name e.g. 
+- Select your created resource, then Actions → Create Method
+- Select method (e.g. POST) or “ANY”
+- Select Integration type: “Lambda Function”, then check the “Use Lambda Proxy integration” and enter the name of your function under “Lambda Function”
+- Actions → Deploy API
+- Enter a “Stage” name e.g. “test”
+- You will get the endpoint back, e.g. `https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test`
+- Test the API with:
+
+    curl -XPOST "https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test/my-lambda-function" -d '{"name":"Tom"}'
