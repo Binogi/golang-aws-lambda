@@ -111,6 +111,8 @@ You should now see your image repository on https://console.aws.amazon.com/ecr/r
       --code ImageUri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest \
       --role arn:aws:iam::[AWS Account Number]:role/lambda-ex
 
+✅ You can now test your Lambda function [in the AWS Console, “Test” tab](https://console.aws.amazon.com/lambda/home).
+
 ### Update an existing Lambda function
 
 Tag your new Docker image to match your repository name:
@@ -137,10 +139,14 @@ Update the Lambda function:
 - Select Integration type: “Lambda Function”, then check the “Use Lambda Proxy integration” and enter the name of your function under “Lambda Function”
 - Actions → Deploy API
 - Enter a “Stage” name e.g. “test”
-- You will get the endpoint back, e.g. `https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test`
 
-You can now test the API with:
+You will get the endpoint back, e.g. `https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test`
+
+✅ You can now test the API with:
 
     curl -XPOST "https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test/my-lambda-function" -d '{"name":"Tom"}'
 
-⚠️ If you get API Gateway "Internal server error", "malformed Lambda proxy response" errors or 502 status codes, it means your function’s response is not formatted correctly for API Gateway: https://aws.amazon.com/premiumsupport/knowledge-center/malformed-502-api-gateway/
+### Troubleshooting
+
+- Note that your Lambda function and API Gateway will have **separate** *Log Groups* in [CloudWatch](https://console.aws.amazon.com/cloudwatch/home).
+- ⚠️ If you get API Gateway "Internal server error", "malformed Lambda proxy response" errors or 502 status codes, it means [your Lambda function’s response is not formatted correctly for API Gateway](https://aws.amazon.com/premiumsupport/knowledge-center/malformed-502-api-gateway/).
