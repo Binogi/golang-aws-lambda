@@ -142,3 +142,5 @@ Update the Lambda function:
 You can now test the API with:
 
     curl -XPOST "https://12345xw4tf.execute-api.eu-west-1.amazonaws.com/test/my-lambda-function" -d '{"name":"Tom"}'
+
+⚠️ If you get API Gateway "malformed Lambda proxy response" errors or 502 status codes, it means your function’s response is not formatted correctly for API Gateway: https://aws.amazon.com/premiumsupport/knowledge-center/malformed-502-api-gateway/
