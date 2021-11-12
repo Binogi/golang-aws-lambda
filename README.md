@@ -13,6 +13,11 @@ See also:
 - Building Go Docker images: https://docs.docker.com/language/golang/build-images/
 
 
+## Write your Lambda function in Go
+
+Edit `my-lambda-function/main.go`
+
+
 ## Building both Go binary and Docker image
 
     make
@@ -57,6 +62,7 @@ In a separate terminal, you can then locally invoke the function using cURL:
 
     curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"name":"Tom"}'
 
+✅ You should get a response like `{"message":"Hello! Dear Tom!"}`
 
 ## Deploy to AWS Lambda
 
@@ -82,9 +88,13 @@ Authenticate the Docker CLI to your Amazon ECR registry:
 
     aws ecr get-login-password --region [Region] | docker login --username AWS --password-stdin [AWS Account Number].dkr.ecr.[Region].amazonaws.com
 
-Tag your image to match your repository name:
+✅ You should get a response like `Login Succeeded`
+
+Tag your new Docker image to match your repository name:
 
     docker tag [my-lambda-function]:latest [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
+
+(You won’t get any response)
 
 Create an ECR repository:
 
@@ -102,6 +112,10 @@ You should now see your image repository on https://console.aws.amazon.com/ecr/r
       --role arn:aws:iam::[AWS Account Number]:role/lambda-ex
 
 ### Update an existing Lambda function
+
+Tag your new Docker image to match your repository name:
+
+    docker tag [my-lambda-function]:latest [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
 Deploy the Docker image to Amazon ECR:
 
