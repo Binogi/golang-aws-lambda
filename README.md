@@ -5,13 +5,13 @@ Uses the following technologies:
 - **Go** programming language
 - **Docker** as container
 - **AWS Lambda** to host the function
-- **AWS ECR (Elastic Container Registry)** to host Docker image
+- **AWS ECR (Elastic Container Registry)** to host the Docker image
 - **AWS API Gateway** to expose the Lambda function as a REST API
-- **AWS CLI tool** (`aws`) to configure AWS.
+- **AWS CLI tool** (`aws`) to configure AWS
 
 The current setup in this project is: 1 REST endpoint → 1 Lambda function → inside 1 Docker image.
 
-Based on [aws-lambda-go on Docker Hub](https://hub.docker.com/r/amazon/aws-lambda-go) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
+Based on [Docker Hub: aws-lambda-go](https://hub.docker.com/r/amazon/aws-lambda-go) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
 
 - AWS:
 	- [AWS Deploy Go Lambda functions with Docker](https://docs.aws.amazon.com/lambda/latest/dg/go-image.html)
