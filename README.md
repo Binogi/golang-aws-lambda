@@ -1,5 +1,7 @@
 # Go functions on AWS Lambda in Docker
 
+[![Develop in Go, and help kids learn better](https://media.cdn.teamtailor.com/images/s3/teamtailor-production/gallery_picture/image_uploads/90c2c459-c30e-4f30-aea3-b7f5e47f52be/original.png)](https://jobs.binogi.com/jobs?department=Tech)
+
 Uses the following technologies:
 
 - **Go** programming language
