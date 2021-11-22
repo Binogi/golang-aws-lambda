@@ -8,12 +8,20 @@ Uses the following technologies:
 - **Docker** as container
 - **AWS Lambda** to host the function
 - **AWS ECR (Elastic Container Registry)** to host the Docker image
-- **AWS API Gateway** to expose the Lambda function as a REST API
+- **AWS API Gateway** to expose the Lambda function as a REST API*
 - **AWS CLI tool** (`aws`) to configure AWS
 
 The current setup in this project is: 1 REST endpoint → 1 Lambda function → inside 1 Docker image.
 
-Based on [Docker Hub: aws-lambda-go](https://hub.docker.com/r/amazon/aws-lambda-go) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
+### Notes on AWS API Gateway
+
+*NOTE: AWS API Gateway adds a bit of overhead on how you handle parameters (`APIGatewayProxyRequest`) and response (`APIGatewayProxyResponse`), which affects how you test it on localhost.
+
+
+
+## Inspiration and references
+
+Based on [AWS Lambda in GoLang — The Ultimate Guide](https://www.softkraft.co/aws-lambda-in-golang/), [Docker Hub: aws-lambda-go](https://hub.docker.com/r/amazon/aws-lambda-go) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
 
 - AWS:
 	- [AWS Deploy Go Lambda functions with Docker](https://docs.aws.amazon.com/lambda/latest/dg/go-image.html)
@@ -24,8 +32,6 @@ Based on [Docker Hub: aws-lambda-go](https://hub.docker.com/r/amazon/aws-lambda-
 	- [AWS API Gateway tutorial: turn Lambda function into REST API](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html)
 - Docker:
 	- [Building Go Docker images](https://docs.docker.com/language/golang/build-images/)
-- Other:
-	- [AWS Lambda in GoLang — The Ultimate Guide](https://www.softkraft.co/aws-lambda-in-golang/)
 
 
 ## Write your Lambda function in Go
@@ -75,9 +81,12 @@ To run your image locally:
 
 In a separate terminal, you can then locally invoke the function using cURL:
 
-    curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"name":"Tom"}'
+    curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"QueryStringParameters":{"name":"Tom"}}'
 
-✅ You should get a response like `{"message":"Hello! Dear Tom!"}`
+✅ You should get a response like `{"statusCode":200,"headers":{"Content-Type":"application/json"},"multiValueHeaders":null,"body":"{\"message\":\"Hello! Dear Tom!\"}"}`
+
+Note the more complex JSON parameters/response used vs in the final results below, see [Notes on AWS API Gateway](#Notes%20on%20AWS%20API%20Gateway) above.
+
 
 ## Deploy to AWS Lambda
 
@@ -162,6 +171,7 @@ Update the Lambda function:
       --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
 **Note:** There’s no need to update API Gateway after updating the Lambda function, but **it can take a minute or so** before the updated Lambda function starts working.
+
 
 ## Troubleshooting
 
