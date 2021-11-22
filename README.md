@@ -128,7 +128,7 @@ Deploy the Docker image to Amazon ECR:
 
     docker push [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
-You should now see your image repository on https://console.aws.amazon.com/ecr/repositories?region=[Region]
+✅ You should now see your image repository on https://console.aws.amazon.com/ecr/repositories?region=[Region]
 
     aws lambda create-function --region [Region] --function-name [my-lambda-function] \
       --package-type Image \
