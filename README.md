@@ -161,7 +161,7 @@ Update the Lambda function:
     aws lambda update-function-code --region [Region] --function-name [my-lambda-function] \
       --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
-**Note:** There’s no need to update API Gateway after updating the Lambda function.
+**Note:** There’s no need to update API Gateway after updating the Lambda function, but **it can take a minute or so** before the updated Lambda function starts working.
 
 ## Troubleshooting
 
