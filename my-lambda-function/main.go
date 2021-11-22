@@ -7,16 +7,12 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-type ExampleEvent struct {
-	Name string `json:"name"`
-}
-
 type ExampleResponse struct {
 	Message string `json:"message"`
 }
 
-func HandleLambdaEvent(event ExampleEvent) (*events.APIGatewayProxyResponse, error) {
-	return api_gateway.ApiResponse(200, ExampleResponse{Message: fmt.Sprintf("Hello! Dear %s!", event.Name)})
+func HandleLambdaEvent(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+	return api_gateway.ApiResponse(200, ExampleResponse{Message: fmt.Sprintf("Hello! Dear %s!", req.QueryStringParameters["name"])})
 }
 
 func main() {
