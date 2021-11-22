@@ -1,15 +1,15 @@
 package api_gateway
 
 import (
-  "encoding/json"
-  "github.com/aws/aws-lambda-go/events"
+	"encoding/json"
+	"github.com/aws/aws-lambda-go/events"
 )
 
 func ApiResponse(status int, body interface{}) (*events.APIGatewayProxyResponse, error) {
-  resp := events.APIGatewayProxyResponse{Headers: map[string]string{"Content-Type": "application/json"}}
-  resp.StatusCode = status
+	resp := events.APIGatewayProxyResponse{Headers: map[string]string{"Content-Type": "application/json"}}
+	resp.StatusCode = status
 
-  stringBody, _ := json.Marshal(body)
-  resp.Body = string(stringBody)
-  return &resp, nil
+	stringBody, _ := json.Marshal(body)
+	resp.Body = string(stringBody)
+	return &resp, nil
 }
