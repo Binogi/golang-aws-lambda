@@ -85,7 +85,7 @@ In a separate terminal, you can then locally invoke the function using cURL:
 
 ✅ You should get a response like `{"statusCode":200,"headers":{"Content-Type":"application/json"},"multiValueHeaders":null,"body":"{\"message\":\"Hello! Dear Tom!\"}"}`
 
-Note the more complex JSON parameters/response used vs in the final results below, see [Notes on AWS API Gateway](#Notes%20on%20AWS%20API%20Gateway) above.
+Note the more complex JSON parameters/response used vs in the final results below, see [Notes on AWS API Gateway](#notes-on-aws-api-gateway) above.
 
 
 ## Deploy to AWS Lambda
@@ -118,7 +118,7 @@ Tag your new Docker image to match your repository name:
 
     docker tag [my-lambda-function]:latest [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
 
-(You won’t get any response)
+(✅ You won’t get any response)
 
 Create an ECR repository:
 
