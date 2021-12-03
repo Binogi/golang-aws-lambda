@@ -1,17 +1,15 @@
-# Go functions on AWS Lambda in Docker
+# Go functions on AWS Lambda
 
 [![Develop in Go, and help kids learn better](https://media.cdn.teamtailor.com/images/s3/teamtailor-production/gallery_picture/image_uploads/90c2c459-c30e-4f30-aea3-b7f5e47f52be/original.png)](https://jobs.binogi.com/jobs?department=Tech)
 
 Uses the following technologies:
 
 - **Go** programming language
-- **Docker** as container
 - **AWS Lambda** to host the function
-- **AWS ECR (Elastic Container Registry)** to host the Docker image
 - **AWS API Gateway** to expose the Lambda function as a REST API*
 - **AWS CLI tool** (`aws`) to configure AWS
 
-The current setup in this project is: 1 REST endpoint → 1 Lambda function → inside 1 Docker image.
+The current setup in this project is: 1 REST endpoint → 1 Lambda function → inside 1 ZIP file.
 
 ### Notes on AWS API Gateway
 
@@ -21,17 +19,12 @@ The current setup in this project is: 1 REST endpoint → 1 Lambda function → 
 
 ## Inspiration and references
 
-Based on [AWS Lambda in GoLang — The Ultimate Guide](https://www.softkraft.co/aws-lambda-in-golang/), [Docker Hub: aws-lambda-go](https://hub.docker.com/r/amazon/aws-lambda-go) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
+Based on [AWS Lambda in GoLang — The Ultimate Guide](https://www.softkraft.co/aws-lambda-in-golang/) and [this example Gist](https://gist.github.com/josephspurrier/05b9126279703a81122cba198df50d6f). See also:
 
 - AWS:
-	- [AWS Deploy Go Lambda functions with Docker](https://docs.aws.amazon.com/lambda/latest/dg/go-image.html)
 	- [AWS Go guide](https://docs.aws.amazon.com/lambda/latest/dg/lambda-golang.html)
-	- [AWS Docker image on ECR (Elastic Container Registry)](https://gallery.ecr.aws/lambda/go)
-	- [AWS Lambda on Docker](https://docs.aws.amazon.com/lambda/latest/dg/configuration-images.html)
 	- [Example of AWS Lambda function written in Go](https://docs.aws.amazon.com/lambda/latest/dg/golang-handler.html)
 	- [AWS API Gateway tutorial: turn Lambda function into REST API](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-create-api-as-simple-proxy-for-lambda.html)
-- Docker:
-	- [Building Go Docker images](https://docs.docker.com/language/golang/build-images/)
 
 
 ## Write your Lambda function in Go
@@ -39,12 +32,12 @@ Based on [AWS Lambda in GoLang — The Ultimate Guide](https://www.softkraft.co/
 Edit `my-lambda-function/main.go`
 
 
-## Building both Go binary and Docker image
+## Building both Go binary and ZIP file
 
     make
 
 
-### (Optional: Manual build steps for Go binary and Docker image)
+### (Optional: Manual build steps for Go binary and ZIP file)
 
 #### Build Go binary
 
@@ -56,7 +49,7 @@ Change to the directory
 
     cd my-lambda-function
 
-_(Create the files: `main.go` and `Dockerfile`)_
+_(Create the files: `main.go`)_
 
 Initialize the module in Go
 
@@ -66,18 +59,16 @@ Build the go app for Linux
 
     GOOS=linux go build
 
-#### Build Docker image
+#### Build ZIP file
 
-To build your Docker image:
+To build your ZIP file:
 
-    docker build -t my-lambda-function .
+    cd my-lambda-function && zip -r ../my-lambda-function.zip * && cd ..
 
 
 ## Running the Lambda function locally
 
-To run your image locally:
-
-    docker run -p 9000:8080 my-lambda-function
+**TBD!**
 
 In a separate terminal, you can then locally invoke the function using cURL:
 
@@ -96,44 +87,20 @@ Parameters used below:
 - `[AWS Account Number]`: e.g. `123456789012`
 - `[Region]`: e.g. `eu-west-1`, `us-east-1`
 
-Create an IAM Policy (e.g. `ECRDockerImageCreation`) with the following permissions:
+You need an IAM Role (e.g. `lambda-ex`) for _executing_ the Lambda function.
 
-    ecr:*
-
-You also need an IAM Role (e.g. `lambda-ex`) for _executing_ the Lambda function.
-
-Build your local Docker image:
+Build your local ZIP file:
 
     make
 
 ### Create a new Lambda function
 
-Authenticate the Docker CLI to your Amazon ECR registry:
-
-    aws ecr get-login-password --region [Region] | docker login --username AWS --password-stdin [AWS Account Number].dkr.ecr.[Region].amazonaws.com
-
-✅ You should get a response like `Login Succeeded`
-
-Tag your new Docker image to match your repository name:
-
-    docker tag [my-lambda-function]:latest [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
-
-(✅ You won’t get any response)
-
-Create an ECR repository:
-
-    aws ecr create-repository --repository-name [my-lambda-function] --region [Region]
-
-Deploy the Docker image to Amazon ECR:
-
-    docker push [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
-
-✅ You should now see your image repository on https://console.aws.amazon.com/ecr/repositories?region=[Region]
-
-    aws lambda create-function --region [Region] --function-name [my-lambda-function] \
-      --package-type Image \
-      --code ImageUri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest \
-      --role arn:aws:iam::[AWS Account Number]:role/lambda-ex
+    aws lambda create-function --function-name [my-lambda-function] \
+      --handler [my-lambda-function] \
+      --zip-file fileb://tmp/[my-lambda-function].zip \
+      --runtime go1.x \
+      --region [Region] \
+      --role arn:aws:iam::[AWS Account Number]:role/lambda-execute
 
 ✅ You can now test your Lambda function [in the AWS Console, “Test” tab](https://console.aws.amazon.com/lambda/home).
 
@@ -157,18 +124,10 @@ You will get an endpoint back, e.g. `https://12345xw4tf.execute-api.eu-west-1.am
 
 ### Update an existing Lambda function
 
-Tag your new Docker image to match your repository name:
-
-    docker tag [my-lambda-function]:latest [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
-
-Deploy the Docker image to Amazon ECR:
-
-    docker push [AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
-
 Update the Lambda function:
 
     aws lambda update-function-code --region [Region] --function-name [my-lambda-function] \
-      --image-uri=[AWS Account Number].dkr.ecr.[Region].amazonaws.com/[my-lambda-function]:latest
+      --zip-file fileb://tmp/[my-lambda-function].zip
 
 **Note:** There’s no need to update API Gateway after updating the Lambda function, but **it can take a minute or so** before the updated Lambda function starts working.
 
