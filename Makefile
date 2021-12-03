@@ -1,5 +1,5 @@
-build-docker-image: compile-go
-	docker build -t my-lambda-function .
+build-zip-file: compile-go
+	cd tmp && zip my-lambda-function.zip my-lambda-function && cd ..
 
 compile-go:
 	mkdir tmp; \
