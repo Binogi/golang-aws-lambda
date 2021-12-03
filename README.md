@@ -43,11 +43,7 @@ Edit `my-lambda-function/main.go`
 
 Create the working directory
 
-    mkdir my-lambda-function
-
-Change to the directory
-
-    cd my-lambda-function
+    mkdir my-lambda-function && cd my-lambda-function
 
 _(Create the files: `main.go`)_
 
