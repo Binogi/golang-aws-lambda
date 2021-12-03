@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 	"example.com/my-lambda-function/api_gateway" // "example.com/my-lambda-function" is the module name in go.mod
+	"flag"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"net/http"
 )
 
 type BodyParameters struct {
@@ -14,6 +16,13 @@ type BodyParameters struct {
 
 type ExampleResponse struct {
 	Message string `json:"message"`
+}
+
+func HandleLocalEvent(res http.ResponseWriter, req *http.Request) {
+	// Print request object
+	reqData, _ := json.Marshal(req)
+	fmt.Println("req object:", req.Body, string(reqData))
+	fmt.Fprintf(res, "Hello world")
 }
 
 func HandleLambdaEvent(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
@@ -29,5 +38,14 @@ func HandleLambdaEvent(req events.APIGatewayProxyRequest) (*events.APIGatewayPro
 }
 
 func main() {
-	lambda.Start(HandleLambdaEvent)
+	isLocal := flag.Bool("local", false, "Set this flag if you are running locally (not on Lambda)")
+	flag.Parse()
+
+	if *isLocal {
+		fmt.Print("--local flag has been set")
+		http.HandleFunc("/", HandleLocalEvent)
+		http.ListenAndServe(":3000", nil)
+	} else {
+		lambda.Start(HandleLambdaEvent)
+	}
 }
