@@ -102,7 +102,12 @@ Build your local ZIP file:
       --region [Region] \
       --role arn:aws:iam::[AWS Account Number]:role/lambda-execute
 
-✅ You can now test your Lambda function [in the AWS Console, “Test” tab](https://console.aws.amazon.com/lambda/home).
+✅ You can now test your Lambda function [in the AWS Console, “Test” tab](https://console.aws.amazon.com/lambda/home) or with:
+
+    aws lambda invoke --function-name [my-lambda-function] \
+      --cli-binary-format raw-in-base64-out \
+      --payload '{"body":"{\"name\":\"Tom\"}"}' \
+      --invocation-type "RequestResponse" tmp/lambda_response.txt
 
 ### Turn the Lambda function into a REST API using AWS API Gateway
 
